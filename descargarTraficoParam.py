@@ -1,16 +1,18 @@
 #! /usr/bin/python
-# usage: descargarTrafico.py url [path_to_store_data]
 
 import time, os, sys
 
-if len(sys.argv) < 2:
-    usage = "usage: {0} url [path_to_store_data]".format(sys.argv[0])
-    exit( usage );
-elif len(sys.argv) == 3:
+if len(sys.argv) == 3:
+    dest = sys.argv[2]
+    if not os.path.exists(dest):
+        os.mkdir(dest)
     print "Storing data in: {0}".format(sys.argv[2])
     os.chdir(sys.argv[2])
+    url = sys.argv[1]
+else:
+    usage = "usage: {0} <url> <path_to_store_data>".format(sys.argv[0])
+    exit( usage );
 
-url = sys.argv[1]
 print "Connecting to host {0}".format(url)
 os.system('wget -k -H -p {0}'.format(url))
 
